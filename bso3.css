@@ -1,0 +1,131 @@
+h1
+{
+	font-size: larger;
+}
+
+h2
+{
+	font-size: large;
+}
+
+h3
+{
+	font-size: 	medium;
+}
+
+html
+{
+	box-sizing: border-box;
+}
+
+*,
+::before,
+::after
+{
+	box-sizing: inherit;
+}
+
+body
+{
+	margin: 10px auto;
+	max-width: 60em;
+	font-family: sans-serif;
+	color: #333333;
+}
+
+article
+{
+	text-align: justify;	
+}
+
+article a
+{
+	color: #919191;
+	text-decoration: none;
+	font-style: italic;
+}
+
+article a:hover,
+article a:active
+{
+	color: #EFEFEF;
+	background-color: #D7D7D7;
+	text-decoration: none;
+}
+
+header,
+nav,
+nav a,
+main,
+article,
+section,
+aside
+{
+	border-radius: 0.5em 0.5em 0.5em;
+	border: 1px solid;
+	padding: 10px;
+	margin: 10px;
+}
+
+header
+{
+	background: #FEFEFE;
+	border-color: #d5d5d5;
+}
+
+nav
+{
+	font-size: 0.91em;
+	float: left;
+	width: 16em;
+	padding: 0;
+	border: 0px;
+}
+
+nav ul
+{
+	padding: 0;
+}
+
+nav li
+{
+	list-style: none;
+	margin: 0;
+	padding: 0.5em;
+}
+
+nav a
+{
+	display: block;
+	padding: 0.2em 10px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #333;
+}
+
+nav ul a:hover,
+nav ul a:active
+{
+	color: #EFEFEF;
+	background-color: #D7D7D7;
+	;
+}
+
+main
+{
+	border: 0px;
+	margin-left: 15em;
+	min-width: 16em;
+	/* Mindestbreite (der Ueberschrift) verhindert Anzeigefehler in modernen Browsern */
+}
+
+section
+{
+	border: 0px;
+}
+
+article
+{
+	border: 0px;
+	font-size: small;
+}

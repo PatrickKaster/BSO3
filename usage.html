@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="bso3.css" type="text/css">
+
+<header>
+    <h1>BSO3</h1>
+    <h3>:: a CSG-plugin for the GroIMP modelling-platform ::</h3>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="index.html" onMouseOver="document.menuentry1.src='img/001b.png';" onMouseOut="document.menuentry1.src='img/001a.png';"><img name="menuentry1" src="img/001a.png" alt="menuentry1">about</a>
+        </li>
+        <li><a href="usage.html" onMouseOver="document.menuentry2.src='img/002b.png';" onMouseOut="document.menuentry2.src='img/001a.png';"><img name="menuentry2" src="img/001a.png" alt="menuentry2">usage</a>
+        </li>
+        <li><a href="walkthrough.html" onMouseOver="document.menuentry3.src='img/003b.png';" onMouseOut="document.menuentry3.src='img/003a.png';"><img name="menuentry3" src="img/003a.png" alt="menuentry3">walkthrough</a>
+        </li>
+        <li><a href="getting.html" onMouseOver="document.menuentry4.src='img/004b.png';"  onMouseOut="document.menuentry4.src='img/003a.png';"><img name="menuentry4" src="img/003a.png" alt="menuentry4">getting BSO3</a>
+        </li>
+        <li><a href="thanks.html" onMouseOver="document.menuentry5.src='img/005b.png';" onMouseOut="document.menuentry5.src='img/005a.png';"><img name="menuentry5" src="img/005a.png" alt="menuentry5">thanks</a>
+        </li>
+        <li><a href="links.html" onMouseOver="document.menuentry6.src='img/006b.png';" onMouseOut="document.menuentry6.src='img/005a.png';"><img name="menuentry6" src="img/005a.png" alt="menuentry6">links</a>
+        </li>
+    </ul>
+</nav>
+
+<main role="main">
+    <article>
+        <h2>usage</h2>
+        <h3>:: using the BSO operator ::</h3>
+		  <p>The BSO3-plugin introduces a new node type "BSO" representing an boolean-set-operation in the growth-grammar. This
+		  short introduction into it's usage assumes that you are already familiar with <a href="http://www.grogra.de/software/groimp">GroIMP</a>'s
+		  XL-language. If not, you should definitely <a href="http://www.slideserve.com/dyan/tutorial-and-workshop-modelling-with-groimp-and-xl-tutorial-for-beginners">read this tutorial first</a>!    
+        </p>
+        
+        <p>
+				The BSO operator comes in three "flavours":
+				<li>Addition: Doing a logical union of sets</li>
+				<li>Subtraction: Doing a logical difference of sets</li>
+				<li>Common: Doing an intersection of sets</li>     
+        </p>
+        
+        <p>As a simple example we are going to subtract a sphere from a box. Firstoff, we are generating our graphical
+        primitives and align them the way we want them. So we are adding the following code to our init method:
+		  <pre><code>
+		  protected void init()
+		  {
+		    Axiom ==>
+			 Box(.5f, .5f, .5f).(setColor(0.95f, 0.95f, 0.95f))
+			 Translate(0, 0, -.25f)
+			 Sphere(.32f).(setColor(0.95f, 0.95f, 0.95f));
+		  }       	
+		  </code></pre>		
+		  The result is a sphere of radius (.32f) placed inside a box with edge length (.5f).  
+        </p>
+        
+        <p>To subtract the sphere from the box, we are now using an BSO Subtraction operator. But first, we are importing
+        the BSO3 plugin:
+		  <pre><code>
+		  import net.cropsense.bso3.*;		  
+		  
+		  protected void init()
+		  {
+		    Axiom ==>
+			 BSO(CSGNodeType.Subtraction, new Color3f(0.95f, 0.95f, 0.95f))			 
+			 Box(.5f, .5f, .5f).(setColor(0.95f, 0.95f, 0.95f))
+			 Translate(0, 0, -.25f)
+			 Sphere(.32f).(setColor(0.95f, 0.95f, 0.95f));
+		  }       	
+		  </code></pre>		  
+        </p>
+        
+        <p>If you are already familiar with XL, then you will now that next we need some "action" function, setting off our little XL-script. Let's call it "go"
+        and add it to our script:
+		  <pre><code>
+		  import net.cropsense.bso3.*;		  
+		  
+		  protected void init()
+		  {
+		    Axiom ==>
+			 BSO(CSGNodeType.Subtraction, new Color3f(0.95f, 0.95f, 0.95f))			 
+			 Box(.5f, .5f, .5f).(setColor(0.95f, 0.95f, 0.95f))
+			 Translate(0, 0, -.25f)
+			 Sphere(.32f).(setColor(0.95f, 0.95f, 0.95f));
+		  }       			  
+		  
+		  public void go() 
+		  { 
+		    console().clear();
+			 [
+				b:first((* BSO *)) ::>
+				{
+					b.apply();
+				}
+			 ]
+		  }
+		  </code></pre>		  
+		  Saving this script should give you a button "go" in GroIMP, performing the CSG-operation. What it does is looking for
+		  the first BSO object in the parse-tree and call it's "apply"-function.       
+        </p>
+        
+        <p>
+				Once the operation finishes, you might not immediately recognize the result. That is because of the original
+				graphical primitives still existing in the scene. Go to "Graph"->"View"->"Redraw" and then select and delete
+				everything under the "BSO" object! You should now see the resulting object.        
+        </p>
+        
+        <p>
+				What else can be done? Instead of a Substraction, you could try a "BSO(CSGNodeType.Addition)" or "BSO(CSGNodeType.Common)"
+				operation. Since the algorithm is working directly on the geometry, it relies on representing all primitives as volumes
+				boundes by planes. And since a lot of plane intersections are performed, the performance depends heavily on the
+				total number of planes representing the involved graphical primitives. To give you some control over the amount
+				of planes used, there are additional methods of the BSO object "setPlanesSamplingSphere(n)" and "setPlanesSamplingCone(n)" defined.
+				Increasing the integer "n" while give you a fine sampling with decreasing performance. The methods may be used
+				like this:
+		  <pre>
+		  <code>
+		   public void go() 
+		   { 
+		    console().clear();
+			 [
+				b:first((* BSO *)) ::>
+				{
+				   b.setPlanesSamplingSphere(25);					
+				   b.apply();
+				}
+			 ]
+		   }
+		  </code></pre>
+        </p>		
+    </article>
+</main>
