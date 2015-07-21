@@ -1,0 +1,10 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<plugin id="net.cropsense.bso3"
+  		version="1.0"
+  		class="net.cropsense.bso3.BSO3Plugin"
+  		xmlns="http://grogra.de/registry">
+  		
+  	<import plugin="de.grogra.imp3d" />
+  
+    <library file="Boolean-Set-Operations3.jar" prefixes="{net.cropsense.bso3}" />
+</plugin>

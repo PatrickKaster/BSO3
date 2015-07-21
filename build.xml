@@ -1,0 +1,13 @@
+<project name="Boolean-Set-Operations3" default="compile">
+
+	<description>
+    Ant build file for the Boolean-Set-Operations3 plugin for GroIMP
+  </description>
+
+	<import file="../Build/buildproject.xml" />
+
+	<target name="-src">
+		<antcall target="-src" />
+	</target>  
+
+</project>
