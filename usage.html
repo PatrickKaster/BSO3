@@ -106,10 +106,10 @@
         <p>
 				What else can be done? Instead of a Substraction, you could try a "BSO(CSGNodeType.Addition)" or "BSO(CSGNodeType.Common)"
 				operation. Since the algorithm is working directly on the geometry, it relies on representing all primitives as volumes
-				boundes by planes. And since a lot of plane intersections are performed, the performance depends heavily on the
+				bounded by planes. And since a lot of plane intersections are performed, the performance of the algorithm depends heavily on the
 				total number of planes representing the involved graphical primitives. To give you some control over the amount
 				of planes used, there are additional methods of the BSO object "setPlanesSamplingSphere(n)" and "setPlanesSamplingCone(n)" defined.
-				Increasing the integer "n" while give you a fine sampling with decreasing performance. The methods may be used
+				Increasing the integer "n" while give you a finer sampling with decreasing performance. The methods may be used
 				like this:
 		  <pre>
 		  <code>
